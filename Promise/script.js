@@ -6,7 +6,10 @@ const button = document.querySelector('#search');
 button.addEventListener('click', (e) => {
   // panggil getMovies
   const promise = getMovies();
-  promise.then((value) => value.Search).then((data) => displayMovieList(data));
+  promise
+    .then((value) => value.Search) // method jika promise resolved/fullfiled
+    .then((data) => displayMovieList(data))
+    .catch((error) => alert(error)); // method jika promise rejected
 
   // Clicked the button
   console.log('Okay');

@@ -25,14 +25,25 @@ function getMovies() {
   ajax.send(); // kirimkan request
   // AJAX Callback (akan di eksekusi setelah proses ajax selesai)
   ajax.onload = () => {
-    const response = JSON.parse(ajax.responseText);
-    const data = response.Search;
-    displayMovieList(data);
+    console.log(ajax.status);
+    if (ajax.status == 200) {
+      const response = JSON.parse(ajax.responseText);
+      const data = response.Search;
+      displayMovieList(data);
+    } else {
+      getMoviesError();
+    }
   };
 
   // tidak bisa dilakukan dengan synchronous
   // const response = JSON.parse(ajax.responseText);
   // console.log(response);
+}
+
+// function jika ajax error
+function getMoviesError() {
+  console.error('Error get Movies');
+  alert('Error get Movies');
 }
 
 // clear input

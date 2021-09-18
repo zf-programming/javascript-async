@@ -6,7 +6,7 @@ const button = document.querySelector('#search');
 button.addEventListener('click', (e) => {
   // panggil getMovies
   const promise = getMovies();
-  console.log(promise);
+  promise.then((value) => value.Search).then((data) => displayMovieList(data));
 
   // Clicked the button
   console.log('Okay');
@@ -30,8 +30,7 @@ function getMovies() {
     ajax.onload = () => {
       console.log(ajax.status);
       if (ajax.status == 200) {
-        const response = JSON.parse(ajax.responseText);
-        const data = response.Search;
+        const data = JSON.parse(ajax.responseText);
         resolve(data);
       } else {
         reject(Error('Gagal mengambil data'));

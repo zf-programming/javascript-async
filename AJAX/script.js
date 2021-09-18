@@ -29,7 +29,7 @@ function getMovies() {
     if (ajax.status == 200) {
       const response = JSON.parse(ajax.responseText);
       const data = response.Search;
-      displayMovieList(data);
+      displayMovieTable(data);
     } else {
       getMoviesError();
     }
@@ -70,4 +70,21 @@ function createMovieList(movies) {
     list += `<li>${movie.Title}</li>`;
   });
   return list;
+}
+
+// function memasukkan table data ke table
+function displayMovieTable(data) {
+  const tableContainer = document.querySelector('.table-movies');
+  tableContainer.innerHTML = createMovieTableData(data);
+}
+
+// function membuat table data
+function createMovieTableData(movies) {
+  let tableData = '';
+  movies.forEach((movie) => {
+    tableData += `<tr><td>${movie.Title}</td>
+    <td>${movie.Year}</td></tr>`;
+  });
+
+  return tableData;
 }

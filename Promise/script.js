@@ -9,8 +9,8 @@ button.addEventListener('click', (e) => {
   promise
     .then((value) => value.Search) // method jika promise resolved/fullfiled
     .then((data) => displayMovieList(data))
-    .catch((error) => alert(error)); // method jika promise rejected
-
+    .catch((error) => alert(error)) // method jika promise rejected
+    .finally(() => console.log('Promise Selesai')); // method yang akan di eksekusi di akhir promise
   // Clicked the button
   console.log('Okay');
 

@@ -5,7 +5,25 @@ const button = document.querySelector('#search');
 // event button
 button.addEventListener('click', (e) => {
   // panggil getMovies
-  getMovies();
+  // contoh
+  getMovies(
+    getMoviesURL(input.value),
+    (data) => console.log(data),
+    () => console.log('Error')
+  );
+
+  // 1 callback success
+  // getMovies(getMoviesURL(input.value), displayMovieList, getMoviesError);
+
+  // 2 callback success
+  // getMovies(
+  //   getMoviesURL(input.value),
+  //   (data) => {
+  //     displayMovieList(data);
+  //     displayMovieTable(data);
+  //   },
+  //   getMoviesError
+  // );
 
   // Clicked the button
   console.log('Okay');
@@ -15,13 +33,12 @@ button.addEventListener('click', (e) => {
 });
 
 // getMovies dengan AJAX
-function getMovies() {
-  // cari movies berdasarkan keyword
-  const url = getMoviesURL(input.value);
-
+// membuat function getMovies menjadi dynamic
+// menjadikan function didalamnya menjadi callback pada arguments
+function getMovies(keyword, callbackSuccess, callbackError) {
   // AJAX
   const ajax = new XMLHttpRequest(); // membuat ajax
-  ajax.open('GET', url); // set request ke url
+  ajax.open('GET', keyword); // set request ke url
   ajax.send(); // kirimkan request
   // AJAX Callback (akan di eksekusi setelah proses ajax selesai)
   ajax.onload = () => {
@@ -29,9 +46,9 @@ function getMovies() {
     if (ajax.status == 200) {
       const response = JSON.parse(ajax.responseText);
       const data = response.Search;
-      displayMovieTable(data);
+      callbackSuccess(data);
     } else {
-      getMoviesError();
+      callbackError();
     }
   };
 

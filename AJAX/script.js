@@ -7,6 +7,9 @@ button.addEventListener('click', (e) => {
   // panggil getMovies
   getMovies();
 
+  // Clicked the button
+  console.log('Okay');
+
   // clear input
   clearInput();
 });
@@ -20,10 +23,16 @@ function getMovies() {
   const ajax = new XMLHttpRequest(); // membuat ajax
   ajax.open('GET', url); // set request ke url
   ajax.send(); // kirimkan request
+  // AJAX Callback (akan di eksekusi setelah proses ajax selesai)
+  ajax.onload = () => {
+    const response = JSON.parse(ajax.responseText);
+    const data = response.Search;
+    displayMovieList(data);
+  };
 
   // tidak bisa dilakukan dengan synchronous
-  const response = JSON.parse(ajax.responseText);
-  console.log(response);
+  // const response = JSON.parse(ajax.responseText);
+  // console.log(response);
 }
 
 // clear input
@@ -37,13 +46,17 @@ function getMoviesURL(keyword) {
 }
 
 // function memasukkan list ke ul
-function displayMovieList() {
+function displayMovieList(data) {
   const movieContainer = document.querySelector('.movies');
-  const movies = createMovieList(movie);
+  const movies = createMovieList(data);
   movieContainer.innerHTML = movies;
 }
 
 // function membuat list untuk movie
-function createMovieList(movie) {
-  return `<li>${movie}</li>`;
+function createMovieList(movies) {
+  let list = '';
+  movies.forEach((movie) => {
+    list += `<li>${movie.Title}</li>`;
+  });
+  return list;
 }

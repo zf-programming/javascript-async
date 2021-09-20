@@ -1,3 +1,5 @@
+// Promise
+
 // seleksi input dan button
 const input = document.querySelector('#search-movie');
 const input2 = document.querySelector('#search-movie2');

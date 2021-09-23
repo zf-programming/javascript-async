@@ -6,10 +6,13 @@ const button = document.querySelector('#search');
 button.addEventListener('click', (e) => {
   // panggil getMovies
   const promise = getMovies();
-  promise.then((videos) => {
-    const data = videos.Search;
-    displayMovieList(data);
-  });
+  promise
+    .then((videos) => {
+      const data = videos.Search;
+      displayMovieList(data);
+    })
+    .catch((error) => getMoviesError()) // method jika promise rejected
+    .finally(() => console.log('Promise Selesai')); // method yang akan di eksekusi di akhir promise
 
   // Clicked the button
   console.log('Okay');

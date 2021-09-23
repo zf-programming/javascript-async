@@ -4,10 +4,18 @@ const button = document.querySelector('#search');
 
 // event button
 button.addEventListener('click', async () => {
-  // panggil getMovies
-  const promise = await getMovies(); // returnnya akan ditunggu dan tidak akan dilewat jika di log
-  const videos = promise.Search; // sudah berbentuk promise, tidak lagi dilewat
-  displayMovieList(videos);
+  // karena async await sifatnya synchronous
+  // maka error handler nya bisa menggunakan try-catch-finally
+  try {
+    // panggil getMovies
+    const promise = await getMovies(); // returnnya akan ditunggu dan tidak akan dilewat jika di log
+    const videos = promise.Search; // sudah berbentuk promise, tidak lagi dilewat
+    displayMovieList(videos);
+  } catch (error) {
+    alert('Gagal Mengambil data Video');
+  } finally {
+    console.log('Selesai memproses Async Await');
+  }
 
   // Clicked the button
   console.log('Okay');
@@ -40,7 +48,7 @@ function clearInput() {
 
 // function mencari movies dari url
 function getMoviesURL(keyword) {
-  return `http://www.omdbapi.com/?apikey=c8800146&s=${keyword}`;
+  return `http://www.omdbapi.com/?apikey=c880046&s=${keyword}`;
 }
 
 // function memasukkan list ke ul
